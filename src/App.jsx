@@ -4,6 +4,7 @@ import { EcommercePage } from './pages/EcommercePage';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { CustomCursor } from './components/CustomCursor';
+import { BusinessLeadModal } from './components/BusinessLeadModal';
 
 import './styles/global.css';
 import './styles/animations.css';
@@ -13,6 +14,7 @@ export default function App() {
     <BrowserRouter>
       <CustomCursor />
       <Navbar />
+      <BusinessLeadModal />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/ecommerce" element={<EcommercePage />} />
