@@ -1,0 +1,81 @@
+:root {
+  /* Crisp Studio Light Palette */
+  --bg-primary: #f8fafd;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --bg-studio: #f4f6fb;
+  --bg-card: rgba(255, 255, 255, 0.85);
+  --bg-card-hover: #ffffff;
+
+  /* Modern Frosted Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-card-bg: rgba(255, 255, 255, 0.55);
+  --glass-card-dark: rgba(15, 23, 42, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-border-subtle: rgba(226, 232, 240, 0.8);
+  --glass-border-hover: rgba(99, 102, 241, 0.45);
+  --glass-blur: blur(20px);
+  --glass-blur-lg: blur(32px);
+
+  /* Vibrant Reference Palette */
+  --color-royal-blue: #2563eb;
+  --color-electric-indigo: #4338ca;
+  --color-deep-navy: #1e1b4b;
+  --accent-pink: #ec4899;
+  --accent-magenta: #d946ef;
+  --accent-cyan: #2dd4bf;
+  --accent-sky: #38bdf8;
+  --accent-violet: #8b5cf6;
+  --accent-mint: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-yellow: #fbbf24;
+  --accent-glow: rgba(99, 102, 241, 0.2);
+
+  /* Signature Gradients */
+  --gradient-screen-hero: linear-gradient(145deg, #2563eb 0%, #4338ca 45%, #1e1b4b 100%);
+  --gradient-screen-tablet: linear-gradient(160deg, #1e293b 0%, #0f172a 60%, #1e1b4b 100%);
+  --gradient-screen-mobile: linear-gradient(180deg, #0f172a 0%, #172554 100%);
+  --gradient-primary: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+  --gradient-primary-hover: linear-gradient(135deg, #f43f5e 0%, #7c3aed 100%);
+  --gradient-secondary: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 100%);
+  --gradient-ribbon: linear-gradient(135deg, #c084fc 0%, #818cf8 35%, #38bdf8 70%, #f472b6 100%);
+  --gradient-glow: linear-gradient(135deg, rgba(236, 72, 153, 0.12) 0%, rgba(99, 102, 241, 0.12) 100%);
+  --gradient-text-accent: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 50%, #818cf8 100%);
+  --gradient-text-hero: linear-gradient(135deg, #ffffff 30%, #e0e7ff 100%);
+
+  /* High-Contrast Typography */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-light: #ffffff;
+  --text-light-muted: rgba(255, 255, 255, 0.78);
+  --text-gradient: linear-gradient(135deg, #0f172a 20%, #4338ca 60%, #ec4899 100%);
+
+  /* Fonts */
+  --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Layout & Radii */
+  --container-width: 1280px;
+  --header-height: 80px;
+  --radius-xs: 8px;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+  --radius-full: 9999px;
+
+  /* Transitions */
+  --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-normal: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Refined Shadows */
+  --shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.05);
+  --shadow-md: 0 12px 30px -4px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.03);
+  --shadow-lg: 0 20px 45px -8px rgba(15, 23, 42, 0.12), 0 8px 16px -4px rgba(15, 23, 42, 0.04);
+  --shadow-glass: 0 16px 40px -8px rgba(37, 99, 235, 0.12), 0 0 0 1px rgba(255, 255, 255, 0.85) inset;
+  --shadow-glow-pink: 0 8px 25px rgba(236, 72, 153, 0.35);
+  --shadow-glow-cyan: 0 8px 25px rgba(45, 212, 191, 0.35);
+  --shadow-glow-indigo: 0 16px 36px -6px rgba(79, 70, 229, 0.25);
+  --shadow-device: 0 35px 70px -15px rgba(15, 23, 42, 0.25), 0 15px 30px -5px rgba(37, 99, 235, 0.15);
+}
