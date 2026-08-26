@@ -1,341 +1,405 @@
-import { useEffect, useRef, useState } from 'react';
-import { servicesData } from '../data/services';
-import { useMouseParallax } from '../hooks/useMouseParallax';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Globe, Smartphone, Code2, Layout, ShoppingBag, Cloud, Cpu, Zap, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react';
+import { useState } from 'react';
+import { 
+  Monitor, 
+  Rocket, 
+  BarChart3, 
+  Search, 
+  Settings, 
+  Sparkles, 
+  Check
+} from 'lucide-react';
+import { motion } from 'framer-motion';
 
-gsap.registerPlugin(ScrollTrigger);
+const services = [
+  {
+    step: 'OPTION 01',
+    number: '01',
+    title: 'Web Development',
+    subtitle: 'Fast React & Next.js Platforms',
+    description: 'High-performance web applications built with modern React architecture and sub-second load speeds.',
+    icon: Monitor,
+    color: '#f43f5e',
+    glowColor: 'rgba(244, 63, 94, 0.25)',
+    left: 15,
+    top: 175,
+    features: ['Single Page React Apps', 'SEO & Performance']
+  },
+  {
+    step: 'OPTION 02',
+    number: '02',
+    title: 'Mobile App Development',
+    subtitle: 'iOS & Android Applications',
+    description: 'Native and cross-platform mobile solutions delivering smooth 60fps user experiences.',
+    icon: Rocket,
+    color: '#f97316',
+    glowColor: 'rgba(249, 115, 22, 0.25)',
+    left: 245,
+    top: 25,
+    features: ['React Native & Flutter', 'Offline Sync & Push']
+  },
+  {
+    step: 'OPTION 03',
+    number: '03',
+    title: 'Custom Enterprise Software',
+    subtitle: 'Tailored SaaS & ERP Systems',
+    description: 'End-to-end custom software built to streamline complex business workflows and automate operations.',
+    icon: BarChart3,
+    color: '#4f46e5',
+    glowColor: 'rgba(79, 70, 229, 0.25)',
+    left: 475,
+    top: 175,
+    features: ['Custom ERP & CRM', 'API Microservices']
+  },
+  {
+    step: 'OPTION 04',
+    number: '04',
+    title: 'AI & Automation Systems',
+    subtitle: 'Intelligent AI Workflows',
+    description: 'Intelligent automation agents, LLM integrations, and predictive data systems to accelerate productivity.',
+    icon: Search,
+    color: '#8b5cf6',
+    glowColor: 'rgba(139, 92, 246, 0.25)',
+    left: 705,
+    top: 25,
+    features: ['AI Agent Workflows', 'Smart Data Analytics']
+  },
+  {
+    step: 'OPTION 05',
+    number: '05',
+    title: 'Cloud & DevOps Solutions',
+    subtitle: 'AWS Cloud Infrastructure',
+    description: 'Scalable cloud infrastructure, automated CI/CD deployment pipelines, and 99.9% uptime monitoring.',
+    icon: Settings,
+    color: '#06b6d4',
+    glowColor: 'rgba(6, 182, 212, 0.25)',
+    left: 935,
+    top: 175,
+    features: ['AWS & Docker Deploy', 'CI/CD Automation']
+  }
+];
 
-const iconMap = {
-  Globe,
-  Smartphone,
-  Code2,
-  Layout,
-  ShoppingBag,
-  Cloud,
-  Cpu,
-  Zap
-};
-
-// Reusable ServiceCard Component with Cyber Neon Glass Styling
-const ServiceCard = ({ service, index, activeIndex }) => {
-  const IconComponent = iconMap[service.iconName] || Globe;
-  const { tiltStyle, handleMouseMove, handleMouseLeave } = useMouseParallax(6);
-  const isActive = index === activeIndex;
+export const Services = () => {
+  const [hoveredIdx, setHoveredIdx] = useState(null);
 
   return (
-    <div
-      className="interactive-card tilt-card service-card-horizontal"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+    <section
+      id="services"
       style={{
-        ...tiltStyle,
+        padding: '100px 0 120px',
         position: 'relative',
-        width: '540px',
-        minWidth: '540px',
-        height: '460px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        overflow: 'hidden',
-        borderRadius: 'var(--radius-lg)',
-        border: isActive ? '2px solid var(--accent-mint)' : '1px solid var(--glass-border)',
-        boxShadow: isActive ? '0 12px 35px -4px rgba(13, 148, 136, 0.25)' : 'var(--shadow-md)',
         background: '#ffffff',
-        backdropFilter: 'blur(16px)',
-        zIndex: 2,
-        transition: 'border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease'
+        overflow: 'hidden'
       }}
     >
-      {/* Animated Top Neon Accent Bar */}
+      {/* Ambient Lighting */}
       <div
         style={{
           position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: '4px',
-          background: 'var(--gradient-primary)',
-          boxShadow: '0 0 10px rgba(13, 148, 136, 0.4)'
+          top: '20%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          width: '1000px',
+          height: '550px',
+          background: 'radial-gradient(ellipse at center, rgba(244, 246, 251, 0.9) 0%, rgba(255, 255, 255, 0) 70%)',
+          pointerEvents: 'none'
         }}
       />
 
-      <div style={{ padding: '36px', display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
-        
-        {/* Card Header */}
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-              <div
-                style={{
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '14px',
-                  background: 'rgba(13, 148, 136, 0.1)',
-                  border: '1px solid rgba(13, 148, 136, 0.25)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: 'var(--accent-mint)'
-                }}
-              >
-                <IconComponent size={24} />
-              </div>
-
-              <div
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '4px 12px',
-                  borderRadius: 'var(--radius-full)',
-                  background: 'rgba(13, 148, 136, 0.08)',
-                  border: '1px solid rgba(13, 148, 136, 0.25)',
-                  fontSize: '0.75rem',
-                  fontFamily: 'var(--font-mono)',
-                  color: 'var(--accent-mint)',
-                  fontWeight: 700
-                }}
-              >
-                <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--accent-mint)', boxShadow: '0 0 6px rgba(13, 148, 136, 0.5)' }} />
-                {service.badge}
-              </div>
-            </div>
-
-            <div
-              style={{
-                fontFamily: 'var(--font-mono)',
-                fontSize: '2rem',
-                fontWeight: 900,
-                color: 'rgba(13, 148, 136, 0.2)'
-              }}
-            >
-              {service.number}
-            </div>
+      <div className="container" style={{ position: 'relative', zIndex: 5 }}>
+        {/* Section Header */}
+        <div className="section-header">
+          <div className="section-tag" style={{ background: 'rgba(79, 70, 229, 0.08)', color: '#4f46e5', borderColor: 'rgba(79, 70, 229, 0.25)' }}>
+            <Sparkles size={14} color="#4f46e5" /> Engineering Capabilities
           </div>
-
-          <h3 style={{ fontSize: '1.65rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '4px' }}>
-            {service.title}
-          </h3>
-
-          <div style={{ fontSize: '0.85rem', fontFamily: 'var(--font-mono)', color: 'var(--accent-indigo)', fontWeight: 600, marginBottom: '14px' }}>
-            {service.subtitle}
-          </div>
-
-          <p style={{ fontSize: '0.925rem', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '20px' }}>
-            {service.description}
+          <h2 className="section-title">
+            Our Core <span className="gradient-text">Services & Solutions</span>
+          </h2>
+          <p className="section-subtitle">
+            An end-to-end digital lifecycle designed to take your ideas from concept to enterprise scale.
           </p>
+        </div>
 
-          {/* Checklist */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '16px' }}>
-            {service.features.map((feat, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.825rem', color: 'var(--text-primary)', fontWeight: 500 }}>
-                <CheckCircle2 size={15} color="var(--accent-mint)" style={{ flexShrink: 0 }} />
-                <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{feat}</span>
-              </div>
-            ))}
+        {/* ========================================================================= */}
+        {/* PIXEL-PERFECT INTERCONNECTED CIRCUIT PIPELINE (DESKTOP)                   */}
+        {/* ========================================================================= */}
+        <div className="pipeline-desktop-wrapper" style={{ width: '100%', maxWidth: '1140px', margin: '30px auto 0' }}>
+          <div
+            style={{
+              position: 'relative',
+              width: '100%',
+              height: '470px'
+            }}
+          >
+            {/* SVG Connecting Flow Lines with exact card bounding coordinates */}
+            <svg
+              width="100%"
+              height="100%"
+              viewBox="0 0 1140 470"
+              fill="none"
+              style={{
+                position: 'absolute',
+                inset: 0,
+                pointerEvents: 'none',
+                zIndex: 2
+              }}
+            >
+              <defs>
+                <marker id="arrRed" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#f43f5e" />
+                </marker>
+                <marker id="arrOrange" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#f97316" />
+                </marker>
+                <marker id="arrIndigo" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#4f46e5" />
+                </marker>
+                <marker id="arrPurple" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                  <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#8b5cf6" />
+                </marker>
+              </defs>
+
+              {/* 1. Circuit Path: Card 1 -> Card 2 */}
+              <path
+                d="M 140 175 L 41 175 Q 15 175 15 201 L 15 419 Q 15 445 41 445 L 189 445 L 320 445 Q 345 445 345 420 L 345 305"
+                stroke="#f43f5e"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                fill="none"
+                markerEnd="url(#arrRed)"
+              />
+
+              {/* 2. Circuit Path: Card 2 -> Card 3 */}
+              <path
+                d="M 245 210 L 245 51 Q 245 25 271 25 L 419 25 L 550 25 Q 575 25 575 50 L 575 165"
+                stroke="#f97316"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                fill="none"
+                markerEnd="url(#arrOrange)"
+              />
+
+              {/* 3. Circuit Path: Card 3 -> Card 4 */}
+              <path
+                d="M 600 175 L 501 175 Q 475 175 475 201 L 475 419 Q 475 445 501 445 L 649 445 L 780 445 Q 805 445 805 420 L 805 305"
+                stroke="#4f46e5"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                fill="none"
+                markerEnd="url(#arrIndigo)"
+              />
+
+              {/* 4. Circuit Path: Card 4 -> Card 5 */}
+              <path
+                d="M 705 210 L 705 51 Q 705 25 731 25 L 879 25 L 1010 25 Q 1035 25 1035 50 L 1035 165"
+                stroke="#8b5cf6"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                fill="none"
+                markerEnd="url(#arrPurple)"
+              />
+
+              {/* 5. Circuit Path: Card 5 outline */}
+              <path
+                d="M 1010 175 L 961 175 Q 935 175 935 201 L 935 419 Q 935 445 961 445 L 1109 445 Q 1135 445 1135 419 L 1135 201 Q 1135 175 1109 175 L 1060 175"
+                stroke="#06b6d4"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                fill="none"
+              />
+            </svg>
+
+            {/* Exactly positioned 5 Cards */}
+            {services.map((item, idx) => {
+              const IconComp = item.icon;
+              const isHovered = hoveredIdx === idx;
+
+              return (
+                <motion.div
+                  key={item.number}
+                  whileHover={{ scale: 1.02 }}
+                  onMouseEnter={() => setHoveredIdx(idx)}
+                  onMouseLeave={() => setHoveredIdx(null)}
+                  style={{
+                    position: 'absolute',
+                    left: `${item.left}px`,
+                    top: `${item.top}px`,
+                    width: '200px',
+                    height: '270px',
+                    background: '#ffffff',
+                    borderRadius: '26px',
+                    padding: '22px 18px',
+                    boxShadow: isHovered
+                      ? `0 25px 45px -10px ${item.glowColor}`
+                      : `0 18px 36px -12px ${item.glowColor}, 0 2px 6px rgba(15, 23, 42, 0.04)`,
+                    border: '1px solid rgba(226, 232, 240, 0.7)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    cursor: 'pointer',
+                    zIndex: 5,
+                    transition: 'box-shadow 0.25s ease, transform 0.25s ease'
+                  }}
+                >
+                  {/* Top Icon */}
+                  <div
+                    style={{
+                      width: '42px',
+                      height: '42px',
+                      borderRadius: '12px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: item.color,
+                      background: `${item.color}14`,
+                      marginBottom: '10px',
+                      transition: 'transform 0.25s ease',
+                      transform: isHovered ? 'scale(1.1)' : 'scale(1)'
+                    }}
+                  >
+                    <IconComp size={22} />
+                  </div>
+
+                  {/* Step Label */}
+                  <span
+                    style={{
+                      fontSize: '0.75rem',
+                      fontWeight: 800,
+                      fontFamily: 'var(--font-mono)',
+                      color: item.color,
+                      letterSpacing: '0.04em',
+                      marginBottom: '4px'
+                    }}
+                  >
+                    {item.step}
+                  </span>
+
+                  {/* Title */}
+                  <h3
+                    style={{
+                      fontSize: '0.92rem',
+                      fontWeight: 800,
+                      color: 'var(--text-primary)',
+                      lineHeight: 1.25,
+                      marginBottom: '6px'
+                    }}
+                  >
+                    {item.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p
+                    style={{
+                      fontSize: '0.72rem',
+                      color: 'var(--text-secondary)',
+                      lineHeight: 1.4,
+                      marginBottom: '10px'
+                    }}
+                  >
+                    {item.description}
+                  </p>
+
+                  {/* Feature Checkmarks */}
+                  <div style={{ marginTop: 'auto', display: 'flex', flexDirection: 'column', gap: '3px', width: '100%' }}>
+                    {item.features.map((feat, fIdx) => (
+                      <div
+                        key={fIdx}
+                        style={{
+                          fontSize: '0.66rem',
+                          color: 'var(--text-muted)',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          gap: '4px'
+                        }}
+                      >
+                        <Check size={10} color={item.color} /> {feat}
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Bottom Tech Bar */}
-        <div style={{ borderTop: '1px solid rgba(203, 213, 225, 0.8)', paddingTop: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
-          
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-            {service.techStack.map((tech, idx) => (
-              <span
-                key={idx}
+        {/* ========================================================================= */}
+        {/* RESPONSIVE MOBILE / TABLET TIMELINE (<992px)                              */}
+        {/* ========================================================================= */}
+        <div className="pipeline-mobile-wrapper" style={{ display: 'none', flexDirection: 'column', gap: '20px', marginTop: '30px' }}>
+          {services.map((item) => {
+            const IconComp = item.icon;
+            return (
+              <div
+                key={item.number}
                 style={{
-                  fontSize: '0.7rem',
-                  fontFamily: 'var(--font-mono)',
-                  padding: '3px 8px',
-                  borderRadius: '6px',
-                  background: 'rgba(13, 148, 136, 0.08)',
-                  border: '1px solid rgba(13, 148, 136, 0.2)',
-                  color: 'var(--accent-mint)',
-                  fontWeight: 600
+                  background: '#ffffff',
+                  borderRadius: '24px',
+                  padding: '24px',
+                  border: `1.5px solid rgba(226, 232, 240, 0.9)`,
+                  boxShadow: `0 15px 30px -8px ${item.glowColor}`,
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '18px'
                 }}
               >
-                {tech}
-              </span>
-            ))}
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-            <span
-              style={{
-                fontSize: '0.725rem',
-                fontFamily: 'var(--font-mono)',
-                color: 'var(--accent-mint)',
-                background: 'rgba(13, 148, 136, 0.08)',
-                border: '1px solid rgba(13, 148, 136, 0.25)',
-                padding: '3px 8px',
-                borderRadius: '6px',
-                fontWeight: 600,
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '4px'
-              }}
-            >
-              <Sparkles size={11} color="var(--accent-mint)" /> {service.impact}
-            </span>
-
-            <a
-              href="#contact"
-              className="btn btn-primary"
-              style={{
-                padding: '8px 16px',
-                fontSize: '0.8rem',
-                borderRadius: 'var(--radius-full)'
-              }}
-            >
-              Scope <ArrowRight size={13} />
-            </a>
-          </div>
-
-        </div>
-
-      </div>
-    </div>
-  );
-};
-
-export const Services = () => {
-  const sectionRef = useRef(null);
-  const triggerRef = useRef(null);
-  const trackRef = useRef(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    const isDesktop = window.matchMedia('(min-width: 993px)').matches;
-    if (!isDesktop) return;
-
-    const ctx = gsap.context(() => {
-      const track = trackRef.current;
-      if (!track) return;
-
-      const totalScroll = track.scrollWidth - window.innerWidth + 120;
-
-      gsap.to(track, {
-        x: -totalScroll,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: triggerRef.current,
-          pin: true,
-          scrub: 0.8,
-          start: 'top top',
-          end: () => `+=${totalScroll * 1.2}`,
-          onUpdate: (self) => {
-            const index = Math.min(
-              Math.floor(self.progress * servicesData.length),
-              servicesData.length - 1
-            );
-            setActiveIndex(index);
-          }
-        }
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <section id="services" ref={sectionRef} style={{ position: 'relative', background: 'var(--bg-primary)' }}>
-      {/* Header */}
-      <div style={{ paddingTop: '100px', paddingBottom: '20px' }}>
-        <div className="container">
-          <div className="section-header" style={{ marginBottom: '20px' }}>
-            <div className="section-tag">
-              <Zap size={14} color="var(--accent-mint)" /> Horizontal Card Scroll
-            </div>
-            <h2 className="section-title">
-              Services Designed to <span className="gradient-text">Scale & Automate</span>
-            </h2>
-            <p className="section-subtitle">
-              Scroll down to glide horizontally through our 8 specialized engineering service cards.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Desktop Horizontal Scroll Track Presenter */}
-      <div className="desktop-services-wrapper">
-        <div ref={triggerRef} style={{ height: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', overflow: 'hidden' }}>
-          
-          {/* Horizontal Progress & Card Counter Indicator Bar */}
-          <div className="container" style={{ marginBottom: '24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <span style={{ fontSize: '1.25rem', fontFamily: 'var(--font-mono)', fontWeight: 800, color: 'var(--accent-mint)' }}>
-                {String(activeIndex + 1).padStart(2, '0')}
-              </span>
-              <span style={{ fontSize: '0.9rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>
-                / 0{servicesData.length} Cards
-              </span>
-            </div>
-
-            {/* Horizontal Track Quick Indicator Pills */}
-            <div style={{ display: 'flex', gap: '8px' }}>
-              {servicesData.map((s, idx) => (
                 <div
-                  key={s.id}
                   style={{
-                    height: '4px',
-                    width: activeIndex === idx ? '36px' : '12px',
-                    borderRadius: '2px',
-                    background: activeIndex === idx ? 'var(--gradient-primary)' : 'rgba(203, 213, 225, 0.8)',
-                    boxShadow: activeIndex === idx ? '0 0 10px rgba(13, 148, 136, 0.4)' : 'none',
-                    transition: 'all 0.3s ease'
+                    width: '46px',
+                    height: '46px',
+                    borderRadius: '14px',
+                    background: `${item.color}14`,
+                    color: item.color,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0
                   }}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Horizontal Sliding Track Container */}
-          <div style={{ width: '100%', overflow: 'hidden' }}>
-            <div
-              ref={trackRef}
-              style={{
-                display: 'flex',
-                gap: '32px',
-                paddingLeft: 'max(24px, calc((100vw - 1240px) / 2))',
-                paddingRight: '60px',
-                width: 'max-content',
-                willChange: 'transform'
-              }}
-            >
-              {servicesData.map((service, index) => (
-                <ServiceCard key={service.id} service={service} index={index} activeIndex={activeIndex} />
-              ))}
-            </div>
-          </div>
-
+                >
+                  <IconComp size={24} />
+                </div>
+                <div>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 800, color: item.color, fontFamily: 'var(--font-mono)' }}>
+                    {item.step}
+                  </span>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: 'var(--text-primary)', margin: '4px 0 6px' }}>
+                    {item.title}
+                  </h3>
+                  <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.45, marginBottom: '8px' }}>
+                    {item.description}
+                  </p>
+                  <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    {item.features.map((feat, fIdx) => (
+                      <span
+                        key={fIdx}
+                        style={{
+                          fontSize: '0.7rem',
+                          color: item.color,
+                          background: `${item.color}10`,
+                          padding: '2px 8px',
+                          borderRadius: '8px',
+                          fontWeight: 600
+                        }}
+                      >
+                        ✓ {feat}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
-      </div>
 
-      {/* Mobile Grid Layout Fallback */}
-      <div className="mobile-services-wrapper container" style={{ paddingBottom: '100px' }}>
-        <div className="grid-2">
-          {servicesData.map((service, index) => (
-            <ServiceCard key={service.id} service={service} index={index} activeIndex={0} />
-          ))}
-        </div>
       </div>
 
       <style>{`
         @media (max-width: 992px) {
-          .desktop-services-wrapper { display: none !important; }
-          .mobile-services-wrapper { display: block !important; }
-          .service-card-horizontal {
-            width: 100% !important;
-            min-width: 100% !important;
-          }
-        }
-        @media (min-width: 993px) {
-          .desktop-services-wrapper { display: block !important; }
-          .mobile-services-wrapper { display: none !important; }
+          .pipeline-desktop-wrapper { display: none !important; }
+          .pipeline-mobile-wrapper { display: flex !important; }
         }
       `}</style>
     </section>
   );
 };
+
