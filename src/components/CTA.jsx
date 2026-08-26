@@ -60,9 +60,14 @@ export const CTA = () => {
               Whether you need a modern web app, mobile application, or custom software—our engineering team is here to help.
             </p>
 
-            <a href="#contact" className="btn btn-primary" style={{ padding: '14px 32px', fontSize: '1rem' }}>
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent('open-business-lead-modal'))}
+              className="btn btn-primary"
+              style={{ padding: '14px 32px', fontSize: '1rem', cursor: 'pointer' }}
+            >
               Get Free Consultation <ArrowRight size={18} />
-            </a>
+            </button>
           </div>
         </div>
       </div>

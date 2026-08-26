@@ -173,7 +173,18 @@ export const BusinessLeadModal = () => {
     };
   }, []);
 
-  // 2. Close on Escape Key
+  // 2. Global Open Event Listener (e.g. from CTA button click)
+  useEffect(() => {
+    const handleOpenModal = () => {
+      setCurrentStep(1);
+      setIsOpen(true);
+    };
+
+    window.addEventListener('open-business-lead-modal', handleOpenModal);
+    return () => window.removeEventListener('open-business-lead-modal', handleOpenModal);
+  }, []);
+
+  // 3. Close on Escape Key
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && isOpen) {
@@ -462,8 +473,8 @@ export const BusinessLeadModal = () => {
                             background: isCurrent
                               ? 'var(--gradient-primary)'
                               : isPassed
-                              ? 'var(--accent-mint)'
-                              : '#e2e8f0',
+                                ? 'var(--accent-mint)'
+                                : '#e2e8f0',
                             color: '#ffffff',
                             fontSize: '0.75rem',
                             fontWeight: 700,
