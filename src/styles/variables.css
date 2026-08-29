@@ -21,7 +21,7 @@
   --color-royal-blue: #2563eb;
   --color-electric-indigo: #4338ca;
   --color-deep-navy: #1e1b4b;
-  --accent-pink: #ec4899;
+  --accent-pink: #0584ba;
   --accent-magenta: #d946ef;
   --accent-cyan: #2dd4bf;
   --accent-sky: #38bdf8;
@@ -35,8 +35,8 @@
   --gradient-screen-hero: linear-gradient(145deg, #2563eb 0%, #4338ca 45%, #1e1b4b 100%);
   --gradient-screen-tablet: linear-gradient(160deg, #1e293b 0%, #0f172a 60%, #1e1b4b 100%);
   --gradient-screen-mobile: linear-gradient(180deg, #0f172a 0%, #172554 100%);
-  --gradient-primary: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
-  --gradient-primary-hover: linear-gradient(135deg, #f43f5e 0%, #7c3aed 100%);
+  --gradient-primary: linear-gradient(135deg, #03bcc9 0%, #03bcc9 100%);
+  --gradient-primary-hover: linear-gradient(135deg, #3fc7f4 0%, #7c3aed 100%);
   --gradient-secondary: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 100%);
   --gradient-ribbon: linear-gradient(135deg, #c084fc 0%, #818cf8 35%, #38bdf8 70%, #f472b6 100%);
   --gradient-glow: linear-gradient(135deg, rgba(236, 72, 153, 0.12) 0%, rgba(99, 102, 241, 0.12) 100%);

@@ -132,6 +132,7 @@ export const BusinessLeadModal = () => {
     company: '',
     email: '',
     phone: '',
+    selectedServices: ['Web App & SaaS'],
     service: 'Web App & SaaS',
     companySize: 'Growing Business (5–50 team)',
     budget: '₹50,000 – ₹1,00,000',
@@ -205,6 +206,23 @@ export const BusinessLeadModal = () => {
     setStepError('');
   };
 
+  // Toggle Checkbox for Software Types (Step 1)
+  const toggleService = (serviceLabel) => {
+    setFormData((prev) => {
+      const currentList = prev.selectedServices || [];
+      const exists = currentList.includes(serviceLabel);
+      const updated = exists
+        ? currentList.filter((s) => s !== serviceLabel)
+        : [...currentList, serviceLabel];
+      return {
+        ...prev,
+        selectedServices: updated,
+        service: updated.join(', ')
+      };
+    });
+    setStepError('');
+  };
+
   const toggleFeature = (feature) => {
     setFormData((prev) => {
       const exists = prev.selectedFeatures.includes(feature);
@@ -222,8 +240,8 @@ export const BusinessLeadModal = () => {
     setStepError('');
 
     if (currentStep === 1) {
-      if (!formData.service) {
-        setStepError('Please select a solution category to proceed.');
+      if (!formData.selectedServices || formData.selectedServices.length === 0) {
+        setStepError('Please check at least one software type to proceed.');
         return;
       }
     } else if (currentStep === 2) {
@@ -705,7 +723,7 @@ export const BusinessLeadModal = () => {
                           What type of software is your business looking to build?
                         </h2>
                         <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
-                          Select the primary digital product or software system you want our engineering team to architect.
+                          Select one or more software products or systems you need developed (multi-select enabled).
                         </p>
                       </div>
 
@@ -719,14 +737,11 @@ export const BusinessLeadModal = () => {
                       >
                         {SERVICES_OPTIONS.map((srv) => {
                           const Icon = srv.icon;
-                          const isSelected = formData.service === srv.label;
+                          const isSelected = (formData.selectedServices || []).includes(srv.label);
                           return (
                             <div
                               key={srv.id}
-                              onClick={() => {
-                                setFormData((prev) => ({ ...prev, service: srv.label }));
-                                setStepError('');
-                              }}
+                              onClick={() => toggleService(srv.label)}
                               style={{
                                 padding: '16px',
                                 borderRadius: '16px',
@@ -762,23 +777,26 @@ export const BusinessLeadModal = () => {
                                   <Icon size={20} />
                                 </div>
 
-                                {isSelected && (
-                                  <span
-                                    style={{
-                                      width: '20px',
-                                      height: '20px',
-                                      borderRadius: '50%',
-                                      background: 'var(--accent-pink)',
-                                      color: '#ffffff',
-                                      display: 'flex',
-                                      alignItems: 'center',
-                                      justifyContent: 'center',
-                                      fontSize: '0.75rem'
-                                    }}
-                                  >
-                                    <Check size={12} strokeWidth={3} />
-                                  </span>
-                                )}
+                                {/* Interactive Checkbox */}
+                                <div
+                                  style={{
+                                    width: '22px',
+                                    height: '22px',
+                                    borderRadius: '6px',
+                                    border: isSelected
+                                      ? '2px solid var(--accent-pink)'
+                                      : '2px solid rgba(203, 213, 225, 0.95)',
+                                    background: isSelected ? 'var(--gradient-primary)' : '#ffffff',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    color: '#ffffff',
+                                    transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
+                                    boxShadow: isSelected ? '0 2px 8px rgba(236, 72, 153, 0.35)' : 'none'
+                                  }}
+                                >
+                                  {isSelected && <Check size={14} strokeWidth={3.5} />}
+                                </div>
                               </div>
 
                               <div style={{ fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '4px' }}>
